@@ -26,6 +26,7 @@ if __name__ == '__main__':
         i += 1
         j = 0
         for quadrangle in result:
+            print(quadrangle)
             j += 1
             k = 0
             for point in quadrangle.points:

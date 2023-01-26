@@ -1,4 +1,5 @@
 from typing import List
+from abc import ABC, abstractmethod
 
 
 class Point:
@@ -6,19 +7,19 @@ class Point:
         self.x = x
         self.y = y
 
-    # """
-    # Выводит расстяние между двумя точками, вызывается через оператор сложения
-    # """
-    # def __add__(self, other_point):
-    #     return ((other_point.x - self.x)**2 + (other_point.y - self.y)**2)**0.5
 
-
-class Trajectory:
+class Geometry(ABC):
     points: List[Point] = []
 
     def __init__(self, point_list: List[Point]):
         self.points = point_list
 
+    @abstractmethod
+    def getDataForVisualization(self):
+        pass
+
+
+class Trajectory(Geometry):
     def getDataForVisualization(self):
         vis_data_x = []
         vis_data_y = []
@@ -28,7 +29,7 @@ class Trajectory:
         return vis_data_x, vis_data_y
 
 
-class Quadrangle(Trajectory):
+class Quadrangle(Geometry):
     def __init__(self, point_list: List[Point]):
         super().__init__(point_list)
         self._sortPoints()

@@ -22,7 +22,7 @@ if __name__ == '__main__':
     for result in results:
         if len(result) == 0:
             continue
-        print("\n")
+        print()
         i += 1
         j = 0
         for quadrangle in result:

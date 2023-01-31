@@ -27,4 +27,4 @@ Json файл вида \
 Вывести в консоль указанные объекты четырёхугольников. \
 
 Start: \
-`python main.py`
+`python main.py [file_path.json]`

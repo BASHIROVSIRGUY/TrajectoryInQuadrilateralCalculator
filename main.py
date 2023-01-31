@@ -1,20 +1,16 @@
+import sys
+
 from logic.handlers import TrajectoryHandler
 from logic.visualizer import Visualizer
 
 
 if __name__ == '__main__':
-    json_str = """
-    {
-        "trajectory": [
-            {"x": 10.0, "y": 2.0},
-            {"x": 11.0, "y": 4.0}
-        ],
-        "quadrangles": [
-            {"x1": 0, "y1": 0, "x2": 1, "y2": 10, "x3": 20, "y3": 2, "x4": 100, "y4": 100}
-        ]
-    }
-    """
-    th = TrajectoryHandler(json_str)
+    json_file_path = 'file.json'
+    
+    if len(sys.argv) > 1:
+        json_file_path = sys.argv[1]
+        
+    th = TrajectoryHandler(json_file_path)
     results = [th.filterQuadrInsideTrajectory(),
                th.filterQuadrIntersectionTrajectory(),
                [th.getQuadrWithMaxPoints()]]

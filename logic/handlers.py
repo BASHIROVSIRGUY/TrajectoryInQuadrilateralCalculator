@@ -12,8 +12,8 @@ class TrajectoryHandler:
         ('x4', 'y4'),
     ]
 
-    def __init__(self, json_str: str):
-        data = json.loads(json_str)
+    def __init__(self, json_file_path: str):
+        data = self._getJsonData(json_file_path)
         self.trajectory: Trajectory = self._getTrajectory(data['trajectory'])
         self.quadr_list: List[Quadrangle] = self._getQuadrList(data['quadrangles'])
 
@@ -60,7 +60,13 @@ class TrajectoryHandler:
                 target_quadr['obj'] = quadr
                 target_quadr['count'] = point_count
         return target_quadr['obj']
-
+    
+    def _getJsonData(file_path):
+        res_obj = None
+        with open(file_path) as file:
+            res_obj = json.load(file)
+        return res_obj
+    
     def _getTrajectory(self, data: List[dict]) -> Trajectory:
         point_list: List[Point] = []
         for item in data:

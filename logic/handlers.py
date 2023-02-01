@@ -61,7 +61,7 @@ class TrajectoryHandler:
                 target_quadr['count'] = point_count
         return target_quadr['obj']
     
-    def _getJsonData(file_path):
+    def _getJsonData(self, file_path):
         res_obj = None
         with open(file_path) as file:
             res_obj = json.load(file)

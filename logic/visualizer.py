@@ -10,7 +10,10 @@ class Visualizer:
         self.fig, self.axes = plt.subplots()
 
     def addQuadrilateral(self, data: List[tuple]) -> None:
-        polygon = Polygon(data, fill=False)
+        r = random()
+        g = random()
+        b = random()
+        polygon = Polygon(data, fill=False, color=[r, g, b])
         self.axes.add_patch(polygon)
 
     def addLine(self, x_points: list, y_points: list) -> None:

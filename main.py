@@ -4,6 +4,35 @@ from logic.handlers import TrajectoryHandler
 from logic.visualizer import Visualizer
 
 
+def printPoints(geometry_obj):
+    i = 0
+    for point in geometry_obj.points:
+        i += 1
+        print(f'point №{i}: (x: {point.x}, y: {point.y})')
+
+
+def printResult(result_dict: dict) -> None:
+    for title, result_list in result_dict.items():
+        if len(result_list) == 0:
+            continue
+        print(f'\n{title}:')
+        i = 0
+        for quadrangle in result_list:
+            i += 1
+            print(f'{i}. {quadrangle}')
+            printPoints(quadrangle)
+
+
+def visualize(trajectory_handler_obj: TrajectoryHandler) -> None:
+    v = Visualizer()
+    for q in trajectory_handler_obj.quadr_list:
+        quadr_data = q.getDataForVisualization()
+        v.addQuadrilateral(quadr_data)
+    line_data = trajectory_handler_obj.trajectory.getDataForVisualization()
+    v.addLine(x_points=line_data[0], y_points=line_data[1])
+    v.draw()
+
+
 if __name__ == '__main__':
     json_file_path = 'file.json'
     
@@ -11,27 +40,11 @@ if __name__ == '__main__':
         json_file_path = sys.argv[1]
         
     th = TrajectoryHandler(json_file_path)
-    results = [th.filterQuadrInsideTrajectory(),
-               th.filterQuadrIntersectionTrajectory(),
-               [th.getQuadrWithMaxPoints()]]
-    i = 0
-    for result in results:
-        if len(result) == 0:
-            continue
-        print()
-        i += 1
-        j = 0
-        for quadrangle in result:
-            print(quadrangle)
-            j += 1
-            k = 0
-            for point in quadrangle.points:
-                k += 1
-                print(f'result №{i}, quadrangle №{j}, point №{k}: (x: {point.x}, y: {point.y})')
-
-    line_data = th.trajectory.getDataForVisualization()
-    quadr_data = th.quadr_list[0].getDataForVisualization()
-    v = Visualizer()
-    v.addLine(x_points=line_data[0], y_points=line_data[1])
-    v.addQuadrilateral(quadr_data)
-    v.draw()
+    results = {
+        "Зоны, в которых расположены все точки траектории": th.filterQuadrInsideTrajectory(),
+        "Зоны, в которых хотя бы одна из точек траектории": th.filterQuadrIntersectionTrajectory(),
+        "Зона с максимальным количеством точек траектории": [th.getQuadrWithMaxPoints()]
+    }
+    printPoints(th.trajectory)
+    printResult(results)
+    visualize(th)

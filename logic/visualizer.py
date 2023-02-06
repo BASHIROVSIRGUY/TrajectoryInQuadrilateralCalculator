@@ -3,6 +3,7 @@ from typing import List
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.patches import Polygon
+from random import random
 
 
 class Visualizer:
